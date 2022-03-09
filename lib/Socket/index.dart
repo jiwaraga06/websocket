@@ -81,6 +81,18 @@ class Socket {
   }
 }
 
+class HTO {
+  final String waktu;
+  final double hto;
+
+  HTO(this.waktu, this.hto);
+
+  @override
+  String toString() {
+    return 'waktu: $waktu, cooling: $hto';
+  }
+}
+
 class SocketChart extends StatefulWidget {
   const SocketChart({Key? key}) : super(key: key);
 
@@ -101,8 +113,10 @@ class _SocketChartState extends State<SocketChart> {
   List<INSocket2> listSc2 = [];
   List<INSocket3> listSc3 = [];
   List<StatisEx> listStatis = [];
+  List<HTO> listHto = [];
   var reverserList;
   var reverserListStatis;
+  var reverserListHTO;
   List pressure = [];
   var judul = '';
   @override
@@ -167,6 +181,9 @@ class _SocketChartState extends State<SocketChart> {
                     .take(js.toString().split(',')[3].split(':')[1].substring(1).length - 1)
                     .toString()
                     .split(';');
+                // print(pak_fajar[0]);
+                var pak_fajar2 = js.toString().split(',')[4].split(';')[1].substring(0);
+                // print(pak_fajar2);
                 var cooling, heating, keeping, off;
                 if (statuszMesin == "closed") {
                   sockets.add(Socket(time[1].toString(), 0, 0, 0, 0));
@@ -203,65 +220,82 @@ class _SocketChartState extends State<SocketChart> {
                 if (listStatis.length >= 21) {
                   listStatis.removeAt(0);
                   sockets.removeAt(0);
+                  listHto.removeAt(0);
                   // listStatis.removeRange(0, 1);
                 }
                 var variable = js.toString().split(',')[3].split(':')[0];
                 judul = variable.toString();
 
-                if (trimTemp.length == 1 && trimServer.length == 1 && trimA.length == 1) {
+                if (trimTemp.length == 1 && trimServer.length == 1 && trimA.length > 1) {
                   var wkt = time[1];
+                  // print('off semua');
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), 0));
                   listSc2.add(INSocket2(wkt.toString(), 0, 0, 0, 0, 0, 0));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length != 1 && trimServer.length == 1 && trimA.length == 1) {
+                } else if (trimTemp.length != 1 && trimServer.length == 1 && trimA.length > 1) {
                   var _in = double.parse(temperatur[0]);
                   var _out = double.parse(temperatur[1]);
                   var _delta = double.parse(temperatur[2]);
                   var wkt = time[1];
+                  // print('temperatur');
                   // print(temperatur);
                   listSc2.add(INSocket2(wkt.toString(), _in, _out, _delta, 0, 0, 0));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length == 1 && trimServer.length != 1 && trimA.length == 1) {
+                } else if (trimTemp.length == 1 && trimServer.length != 1 && trimA.length > 1) {
                   var _hmd = double.parse(ruang_server[0]);
                   var _tmp = double.parse(ruang_server[1]);
                   var wkt = time[1];
+                  // print('server');
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), 0));
                   listSc2.add(INSocket2(wkt.toString(), 0, 0, 0, _hmd, _tmp, 0));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length == 1 && trimServer.length == 1 && trimA.length != 1) {
+                } else if (trimTemp.length == 1 && trimServer.length == 1 && trimA.length == 1) {
                   var a = double.parse(pak_fajar[0]);
+                  var b = double.parse(pak_fajar2);
+                  // print('header df 2');
                   var wkt = time[1];
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), b));
                   listSc2.add(INSocket2(wkt.toString(), 0, 0, 0, 0, 0, a));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length != 1 && trimServer.length == 1 && trimA.length != 1) {
+                } else if (trimTemp.length != 1 && trimServer.length == 1 && trimA.length == 1) {
                   var a = double.parse(pak_fajar[0]);
                   var _in = double.parse(temperatur[0]);
                   var _out = double.parse(temperatur[1]);
                   var _delta = double.parse(temperatur[2]);
                   var wkt = time[1];
+                  var b = double.parse(pak_fajar2);
+                  // print('temperatur, header');
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), b));
                   listSc2.add(INSocket2(wkt.toString(), _in, _out, _delta, 0, 0, a));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length == 1 && trimServer.length != 1 && trimA.length != 1) {
+                } else if (trimTemp.length == 1 && trimServer.length != 1 && trimA.length == 1) {
                   var a = double.parse(pak_fajar[0]);
                   var _hmd = double.parse(ruang_server[0]);
                   var _tmp = double.parse(ruang_server[1]);
                   var wkt = time[1];
+                  var b = double.parse(pak_fajar2);
+                  // print('server, header');
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), b));
                   listSc2.add(INSocket2(wkt.toString(), 0, 0, 0, _hmd, _tmp, a));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length != 1 && trimServer.length != 1 && trimA.length == 1) {
+                } else if (trimTemp.length != 1 && trimServer.length != 1 && trimA.length > 1) {
                   var _in = double.parse(temperatur[0]);
                   var _out = double.parse(temperatur[1]);
                   var _delta = double.parse(temperatur[2]);
                   var _hmd = double.parse(ruang_server[0]);
                   var _tmp = double.parse(ruang_server[1]);
                   var wkt = time[1];
+                  // print('temperatur ,server');
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), 0));
                   listSc2.add(INSocket2(wkt.toString(), _in, _out, _delta, _hmd, _tmp, 0));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
-                } else if (trimTemp.length != 1 && trimServer.length != 1 && trimA.length != 1) {
+                } else if (trimTemp.length != 1 && trimServer.length != 1 && trimA.length == 1) {
                   var a = double.parse(pak_fajar[0]);
                   var _in = double.parse(temperatur[0]);
                   var _out = double.parse(temperatur[1]);
@@ -269,24 +303,29 @@ class _SocketChartState extends State<SocketChart> {
                   var _hmd = double.parse(ruang_server[0]);
                   var _tmp = double.parse(ruang_server[1]);
                   var wkt = time[1];
+                  var b = double.parse(pak_fajar2);
+                  // print('temperatur ,server, header df 2');
                   // print(temperatur);
+                  listHto.add(HTO(wkt.toString(), b));
                   listSc2.add(INSocket2(wkt.toString(), _in, _out, _delta, _hmd, _tmp, a));
                   listStatis.add(StatisEx(wkt.toString(), 3.25));
                 }
                 Iterable reverseList = listSc2.reversed;
                 Iterable reverseList2 = listStatis.reversed;
+                Iterable reverseListHTO = listHto.reversed;
                 reverserList = reverseList.toList();
                 reverserListStatis = reverseList2.toList();
+                reverserListHTO = reverseListHTO.toList();
                 return Column(
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 9.0, left: 14.0),
                       height: 250,
                       child: SfCartesianChart(
-                        // crosshairBehavior: CrosshairBehavior(
-                        //   enable: true,
-                        //   activationMode: ActivationMode.singleTap,
-                        // ),
+                        crosshairBehavior: CrosshairBehavior(
+                          enable: true,
+                          activationMode: ActivationMode.singleTap,
+                        ),
                         title: ChartTitle(text: 'Temperatur'),
                         primaryXAxis: CategoryAxis(
                           labelPlacement: LabelPlacement.onTicks,
@@ -318,6 +357,15 @@ class _SocketChartState extends State<SocketChart> {
                             xValueMapper: (INSocket2 sc, _) => sc.waktu.toString(),
                             yValueMapper: (INSocket2 sc, _) => sc.temp,
                             color: Colors.green,
+                          ),
+                          SplineSeries<HTO, String>(
+                            animationDuration: 0.5,
+                            name: 'Temperatur HTO DF-2',
+                            width: 1.5,
+                            dataSource: reverserListHTO,
+                            xValueMapper: (HTO sc, _) => sc.waktu.toString(),
+                            yValueMapper: (HTO sc, _) => sc.hto,
+                            color: Color(0xFF533E85),
                           ),
                           SplineSeries<INSocket2, String>(
                             animationDuration: 0.5,
@@ -392,6 +440,21 @@ class _SocketChartState extends State<SocketChart> {
                                 Container(
                                   height: 3,
                                   width: 20,
+                                  color: Color(0xFF533E85),
+                                  margin: const EdgeInsets.only(bottom: 4),
+                                ),
+                                const Text("Temperatur HTO DF-2"),
+                                pak_fajar2.length != 4 ? Text(pak_fajar2.toString()) : Text(pak_fajar2.toString()),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 3,
+                                  width: 20,
                                   color: Colors.lightBlue,
                                   margin: const EdgeInsets.only(bottom: 4),
                                 ),
@@ -437,6 +500,10 @@ class _SocketChartState extends State<SocketChart> {
                       margin: const EdgeInsets.only(top: 12.0, left: 14.0),
                       height: 310,
                       child: SfCartesianChart(
+                        crosshairBehavior: CrosshairBehavior(
+                          enable: true,
+                          activationMode: ActivationMode.singleTap,
+                        ),
                         title: ChartTitle(text: 'Pressure'),
                         primaryXAxis: CategoryAxis(
                           labelPlacement: LabelPlacement.onTicks,
