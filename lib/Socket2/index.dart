@@ -118,135 +118,161 @@ class LineChartSample1State extends State<LineChartSample1> {
                   return ListView(
                     shrinkWrap: true,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.all(12),
-                        child: SfCircularChart(
-                          tooltipBehavior: _tooltipBehaviorDye,
-                          palette: const <Color>[
-                            Colors.blue,
-                            Color(0xFF14C38E),
-                            Color(0xFF393E46),
-                          ],
-                          series: <CircularSeries>[
-                            PieSeries<INSocket, String>(
-                              dataSource: chartData,
-                              xValueMapper: (INSocket data, _) => data.nama,
-                              yValueMapper: (INSocket data, _) => data.nilai.roundToDouble(),
-                              strokeWidth: 2,
-                              explodeAll: true,
-                              explodeOffset: '2%',
-                              enableTooltip: true,
-                              explode: true,
-                              dataLabelSettings: const DataLabelSettings(
-                                // isVisible: true,
-                                showCumulativeValues: true,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Column(
                               children: [
-                                const SizedBox(
-                                  width: 50,
-                                  child: Icon(Icons.pie_chart, color: Colors.blue),
+                                Container(
+                                  margin: const EdgeInsets.all(12),
+                                  child: SfCircularChart(
+                                    tooltipBehavior: _tooltipBehaviorDye,
+                                    palette: const <Color>[
+                                      Color(0xFF7FB5FF),
+                                      Color(0xFF14C38E),
+                                      Color(0xFF393E46),
+                                    ],
+                                    series: <CircularSeries>[
+                                      PieSeries<INSocket, String>(
+                                        dataSource: chartData,
+                                        xValueMapper: (INSocket data, _) => data.nama,
+                                        yValueMapper: (INSocket data, _) => data.nilai.roundToDouble(),
+                                        strokeWidth: 2,
+                                        explodeAll: true,
+                                        explodeOffset: '2%',
+                                        enableTooltip: true,
+                                        explode: true,
+                                        dataLabelSettings: const DataLabelSettings(
+                                          // isVisible: true,
+                                          showCumulativeValues: true,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(width: 50, child: Text("JODYE")),
-                                Text(perJO.toStringAsFixed(1) + '%'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 50, child: Icon(Icons.pie_chart, color: Color(0xFF393E46))),
-                                const SizedBox(width: 50, child: Text("RLDYE")),
-                                Text(
-                                  perRL.toStringAsFixed(1) + '%',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 50, child: Icon(Icons.pie_chart, color: Color(0xFF14C38E))),
-                                const SizedBox(width: 50, child: Text("KPDYE")),
-                                Text(
-                                  perKP.toStringAsFixed(1) + '%',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(12),
-                        child: SfCircularChart(
-                          tooltipBehavior: _tooltipBehaviorPrt,
-                          palette: const <Color>[
-                            Colors.blue,
-                            Color(0xFF14C38E),
-                            Color(0xFF393E46),
-                          ],
-                          series: <CircularSeries>[
-                            PieSeries<SocketPrt, String>(
-                              dataSource: chartPrt,
-                              xValueMapper: (SocketPrt data, _) => data.nama,
-                              yValueMapper: (SocketPrt data, _) => data.nilai.roundToDouble(),
-                              strokeWidth: 2,
-                              explodeAll: true,
-                              explodeOffset: '2%',
-                              enableTooltip: true,
-                              explode: true,
-                              dataLabelSettings: const DataLabelSettings(
-                                // isVisible: true,
-                                showCumulativeValues: true,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  width: 50,
-                                  child: Icon(Icons.pie_chart, color: Colors.blue),
-                                ),
-                                const SizedBox(width: 50, child: Text("JOPRT")),
-                                Text(perJOPrt.toStringAsFixed(1) + '%'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 50, child: Icon(Icons.pie_chart, color: Color(0xFF393E46))),
-                                const SizedBox(width: 50, child: Text("RLPRT")),
-                                Text(
-                                  perRLPrt.toStringAsFixed(1) + '%',
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 50,
+                                            child: Icon(
+                                              Icons.pie_chart,
+                                              color: Color(0xFF7FB5FF),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 50, child: Text("JODYE")),
+                                          Text(perJO.toStringAsFixed(1) + '%'),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                              width: 50,
+                                              child: Icon(
+                                                Icons.pie_chart,
+                                                color: Color(0xFF393E46),
+                                              )),
+                                          const SizedBox(width: 50, child: Text("RLDYE")),
+                                          Text(perRL.toStringAsFixed(1) + '%'),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                              width: 50,
+                                              child: Icon(
+                                                Icons.pie_chart,
+                                                color: Color(0xFF14C38E),
+                                              )),
+                                          const SizedBox(width: 50, child: Text("KPDYE")),
+                                          Text(perKP.toStringAsFixed(1) + '%'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Column(
                               children: [
-                                const SizedBox(width: 50, child: Icon(Icons.pie_chart, color: Color(0xFF14C38E))),
-                                const SizedBox(width: 50, child: Text("KPPRT")),
-                                Text(
-                                  perKPPrt.toStringAsFixed(1) + '%',
+                                Container(
+                                  margin: const EdgeInsets.all(12),
+                                  child: SfCircularChart(
+                                    tooltipBehavior: _tooltipBehaviorPrt,
+                                    palette: const <Color>[
+                                      Color(0xFF7FB5FF),
+                                      Color(0xFF14C38E),
+                                      Color(0xFF393E46),
+                                    ],
+                                    series: <CircularSeries>[
+                                      PieSeries<SocketPrt, String>(
+                                        dataSource: chartPrt,
+                                        xValueMapper: (SocketPrt data, _) => data.nama,
+                                        yValueMapper: (SocketPrt data, _) => data.nilai.roundToDouble(),
+                                        strokeWidth: 2,
+                                        explodeAll: true,
+                                        explodeOffset: '2%',
+                                        enableTooltip: true,
+                                        explode: true,
+                                        dataLabelSettings: const DataLabelSettings(
+                                          // isVisible: true,
+                                          showCumulativeValues: true,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 50,
+                                            child: Icon(
+                                              Icons.pie_chart,
+                                              color: Color(0xFF7FB5FF),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 50, child: Text("JOPRT")),
+                                          Text(perJOPrt.toStringAsFixed(1) + '%'),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(width: 50, child: Icon(Icons.pie_chart, color: Color(0xFF393E46))),
+                                          const SizedBox(width: 50, child: Text("RLPRT")),
+                                          Text(perRLPrt.toStringAsFixed(1) + '%'),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(width: 50, child: Icon(Icons.pie_chart, color: Color(0xFF14C38E))),
+                                          const SizedBox(width: 50, child: Text("KPPRT")),
+                                          Text(perKPPrt.toStringAsFixed(1) + '%'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   );
