@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chart_mesin/Design/design.dart';
 import 'package:chart_mesin/Socket/index.dart';
 import 'package:chart_mesin/Socket2/index.dart';
 import 'package:chart_mesin/Socket3/index.dart';
